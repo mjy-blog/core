@@ -27,30 +27,20 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@contentlayer/generated/*": [
-        "../.contentlayer/generated/*"
-      ],
       "@/*": [
         "./*"
-      ],
-    },
+      ]
+    }
   },
   "include": [
-    "./global.d.ts",
-    "./next-env.d.ts",
-    "./constants.cjs",
-    "**/*.ts",
-    "**/*.tsx",
+    "next-env.d.ts",
     ".next/types/**/*.ts",
-    "public/script/installSetTheme.js",
-    ".contentlayer/generated"
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+    "node_modules",
+    "articles",
+    "theme",
+  ]
 }
