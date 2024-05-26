@@ -36,7 +36,7 @@ fi
 rm -rf articles
 git clone --recursive "${ARTICLES_GIT_REPOSITORY_URL:?}" articles
 (cd articles && sh build.sh)
-rm -rf 'src/app/(articles)'
-cp -r articles/out 'src/app/(articles)'
+rm -rf 'src/app/_articles'
+cp -r articles/out 'src/app/_articles'
 npm i
 npm run build
