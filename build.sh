@@ -4,6 +4,9 @@ set -e
 
 cd "$(dirname "$0")"
 
+
+# env
+
 load_env_file() {
   ENV_FILE_PATH="$1"
 
@@ -33,10 +36,26 @@ else
   load_env_file .env.development.local
 fi
 
+
+# build articles
+
 rm -rf articles
 git clone --recursive "${ARTICLES_GIT_REPOSITORY_URL:?}" articles
 (cd articles && sh build.sh)
 rm -rf 'src/app/_articles'
 cp -r articles/out 'src/app/_articles'
+
+
+# build theme
+
+rm -rf theme
+git clone --recursive "${THEME_GIT_REPOSITORY_URL:?}" theme
+(cd theme && sh build.sh)
+rm -rf 'src/app/_theme'
+cp -r theme/out 'src/app/_theme'
+
+
+# build
+
 npm i
 npm run build

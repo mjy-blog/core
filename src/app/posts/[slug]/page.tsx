@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { ComponentType } from 'react';
 
+import { PostPage } from '@/app/_theme/PostPage';
 import { data } from '@/lib/data';
 import { getArticleBySlug } from '@/lib/getArticleBySlug';
 
@@ -15,10 +16,11 @@ export default async function Post({ params }: Params) {
   ).default;
 
   return (
-    <main>
-      <h1>{article.attributes.title}</h1>
-      <MDXContent />
-    </main>
+    <PostPage
+      MDXContent={MDXContent}
+      attributes={article.attributes}
+      slug={article.slug}
+    />
   );
 }
 
