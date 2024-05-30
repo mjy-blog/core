@@ -10,6 +10,8 @@ cd "$(dirname "$0")"
 (cd articles && git pull && git submodule update --init && sh build.sh)
 rm -rf 'src/app/_articles'
 cp -r articles/out 'src/app/_articles'
+rm -rf public/posts
+[ ! -d src/app/_articles/public ] || mv src/app/_articles/public public/posts
 
 
 # build theme
