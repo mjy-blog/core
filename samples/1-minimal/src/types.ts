@@ -1,3 +1,0 @@
-export interface Extra {
-  // nothing
-}
