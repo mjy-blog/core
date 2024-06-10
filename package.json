@@ -16,15 +16,13 @@
   "dependencies": {
     "@-ft/mode-next": "^0.1.6",
     "@giscus/react": "^3.0.0",
-    "@mdx-js/mdx": "^3.0.1",
-    "@types/glob": "^8.1.0",
     "@types/react": "^18.3.2",
-    "glob": "^10.3.15",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "@types/node": "20.14.2",
     "http-server": "^14.1.1"
   }
 }
