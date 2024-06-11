@@ -55,6 +55,8 @@ git clone --recursive "${THEME_GIT_REPOSITORY_URL:?}" theme
 (cd theme && sh build.sh)
 rm -rf 'src/app/_theme'
 cp -r theme/out 'src/app/_theme'
+rm -rf public/theme
+[ ! -d src/app/_theme/public ] || mv src/app/_theme/public public/theme
 
 
 # build

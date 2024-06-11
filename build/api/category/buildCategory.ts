@@ -66,4 +66,13 @@ export async function buildCategory() {
       JSON.stringify(relatedTags(posts)),
     );
   }
+
+  await writeFile(
+    'public/api/category/top.json',
+    JSON.stringify(
+      allCategories
+        .filter((category) => category.length === 1)
+        .map(([segment]) => segment),
+    ),
+  );
 }
