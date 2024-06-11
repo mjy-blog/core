@@ -4,6 +4,8 @@ import { ComponentType } from 'react';
 import { PostPage } from '@/app/_theme/PostPage';
 import { data } from '@/lib/data';
 import { getArticleBySlug } from '@/lib/getArticleBySlug';
+import { Hierarchy } from '@mjy-blog/theme-lib';
+import { readFile } from 'fs/promises';
 import { format } from 'util';
 
 interface Params {
@@ -15,9 +17,19 @@ export default async function Post({ params }: Params) {
   const MDXContent: ComponentType = (
     await import('../../_articles/' + article.path.replace(/\\/g, '/'))
   ).default;
+  const hierarchy = JSON.parse(
+    (
+      await readFile(
+        './public/api/category/' +
+          article.attributes.categories.join('/') +
+          '/hierarchy.json',
+      )
+    ).toString(),
+  ) as Hierarchy;
 
   return (
     <PostPage
+      hierarchy={hierarchy}
       MDXContent={MDXContent}
       attributes={article.attributes}
       slug={article.slug}
