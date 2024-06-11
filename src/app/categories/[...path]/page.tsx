@@ -1,8 +1,12 @@
-import { allCategories } from '@/lib/allCategories';
-import { getHierarchyByPath } from '@/lib/getHierarchyByPath';
-import { getPostsByCategory } from '@/lib/getPostsByCategory';
-import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
+import { readFile } from 'fs/promises';
+
+import { CategorySubNode, Hierarchy } from '@mjy-blog/theme-lib';
 import { Metadata } from 'next';
+
+import { CategoryPage } from '@/app/_theme/CategoryPage';
+import { Article } from '@/lib/Article';
+import { allCategories } from '@/lib/allCategories';
+import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
 
 interface Params {
   params: Record<'path', string[]>;
@@ -13,13 +17,43 @@ export default async function Category({ params }: Params) {
   if (!allCategories.some((c) => stringArrayComparator(c, category))) {
     throw new Error(`Non-exist category: ${category.join(' / ')}`);
   }
-  const hierarchy = getHierarchyByPath(category);
-  const posts = getPostsByCategory(category);
+  const hierarchy = JSON.parse(
+    (
+      await readFile(
+        './public/api/category/' + category.join('/') + '/hierarchy.json',
+      )
+    ).toString(),
+  ) as Hierarchy;
+  const posts = JSON.parse(
+    (
+      await readFile(
+        './public/api/category/' + category.join('/') + '/posts.json',
+      )
+    ).toString(),
+  ) as Article[];
+  const sub = JSON.parse(
+    (
+      await readFile(
+        './public/api/category/' + category.join('/') + '/sub.json',
+      )
+    ).toString(),
+  ) as CategorySubNode[];
+  const relatedTags = JSON.parse(
+    (
+      await readFile(
+        './public/api/category/' + category.join('/') + '/relatedTags.json',
+      )
+    ).toString(),
+  ) as [name: string, score: number][];
 
   return (
-    <pre>
-      <code>{JSON.stringify({ hierarchy, posts }, undefined, 2)}</code>
-    </pre>
+    <CategoryPage
+      category={category}
+      hierarchy={hierarchy}
+      sub={sub}
+      relatedTags={relatedTags}
+      posts={posts}
+    />
   );
 }
 

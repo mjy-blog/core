@@ -1,8 +1,8 @@
 import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 
+import { HierarchyNode } from '@mjy-blog/theme-lib';
 import { Article } from '../../../src/lib/Article';
-import { HierarchyNode } from '../../../src/lib/Hierarchy';
 import { allCategories } from '../../../src/lib/allCategories';
 import { getHierarchyByPath } from '../../../src/lib/getHierarchyByPath';
 import { getPostsByCategory } from '../../../src/lib/getPostsByCategory';

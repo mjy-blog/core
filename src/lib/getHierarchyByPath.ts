@@ -1,4 +1,5 @@
-import { Hierarchy, HierarchyNode, HierarchyValue } from './Hierarchy';
+import { Hierarchy, HierarchyNode, HierarchyValue } from '@mjy-blog/theme-lib';
+
 import { allCategories } from './allCategories';
 import { getPostsByCategory } from './getPostsByCategory';
 import { stringArrayComparator } from './util/stringArrayComparator';
@@ -26,7 +27,8 @@ function internal(path: string[], prefix: string[]): HierarchyNode[] {
         value.sub = [
           ...internal(path, [...prefix, category[depth]]),
           ...getPostsByCategory(category).map(
-            ({ slug }) => [slug, { type: 'post' }] as const,
+            ({ slug, attributes: { title } }) =>
+              [slug, { type: 'post', title }] as const,
           ),
         ];
       }
