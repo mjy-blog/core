@@ -25,7 +25,7 @@ function internal(path: string[], prefix: string[]): HierarchyNode[] {
       if (stringArrayComparator(path.slice(0, depth), b) === 0) {
         value.sub = [
           ...internal(path, [...prefix, category[depth]]),
-          ...getPostsByCategory(b).map(
+          ...getPostsByCategory(category).map(
             ({ slug }) => [slug, { type: 'post' }] as const,
           ),
         ];
