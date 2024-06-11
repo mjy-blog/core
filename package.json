@@ -16,7 +16,7 @@
   "dependencies": {
     "@-ft/mode-next": "^0.1.6",
     "@giscus/react": "^3.0.0",
-    "@mjy-blog/theme-lib": "^0.1.1",
+    "@mjy-blog/theme-lib": "^0.1.2",
     "@types/react": "^18.3.2",
     "next": "^14.2.3",
     "react": "^18.3.1",

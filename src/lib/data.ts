@@ -1,5 +1,7 @@
-import { Article } from './Article';
+import raw from '@/app/_articles/index.json';
+import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
+import { Post } from './Post';
 
-import raw from '../app/_articles/index.json';
-
-export const data: Article[] = raw.sort((a, b) => a.slug.localeCompare(b.slug));
+export const data: Post<CustomPostAttribute>[] = raw.sort((a, b) =>
+  a.slug.localeCompare(b.slug),
+);

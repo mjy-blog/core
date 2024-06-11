@@ -1,9 +1,10 @@
 import { readFile } from 'fs/promises';
 
+import { Post } from '@mjy-blog/theme-lib';
 import { Metadata } from 'next';
 
+import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
 import { TagPage } from '@/app/_theme/TagPage';
-import { Article } from '@/lib/Article';
 import { allTags } from '@/lib/allTags';
 
 interface Params {
@@ -17,7 +18,7 @@ export default async function Category({ params }: Params) {
   }
   const posts = JSON.parse(
     (await readFile('./public/api/tag/' + tag + '/posts.json')).toString(),
-  ) as Article[];
+  ) as Post<CustomPostAttribute>[];
   const relatedCategories = JSON.parse(
     (
       await readFile('./public/api/tag/' + tag + '/relatedCategories.json')

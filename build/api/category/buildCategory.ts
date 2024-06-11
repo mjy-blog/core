@@ -2,10 +2,12 @@ import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 
 import { HierarchyNode } from '@mjy-blog/theme-lib';
-import { Article } from '../../../src/lib/Article';
-import { allCategories } from '../../../src/lib/allCategories';
-import { getHierarchyByPath } from '../../../src/lib/getHierarchyByPath';
-import { getPostsByCategory } from '../../../src/lib/getPostsByCategory';
+
+import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
+import { Post } from '@/lib/Post';
+import { allCategories } from '@/lib/allCategories';
+import { getHierarchyByPath } from '@/lib/getHierarchyByPath';
+import { getPostsByCategory } from '@/lib/getPostsByCategory';
 import { inconsistencyError } from '../../util/inconsistencyError';
 
 function getSub(nodes: HierarchyNode[], category: string[]): HierarchyNode[] {
@@ -20,7 +22,7 @@ function getSub(nodes: HierarchyNode[], category: string[]): HierarchyNode[] {
   }
 }
 
-function relatedTags(posts: Article[]): [string, number][] {
+function relatedTags(posts: Post<CustomPostAttribute>[]): [string, number][] {
   const count = new Map<string, number>();
   for (const post of posts) {
     for (const tag of post.attributes.tags) {

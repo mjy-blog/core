@@ -4,6 +4,7 @@
 
 # next
 /.next
+/tsconfig.tsbuildinfo
 
 # env
 .env

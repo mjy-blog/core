@@ -1,12 +1,13 @@
 import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 
-import { Article } from '../../../src/lib/Article';
-import { allTags } from '../../../src/lib/allTags';
-import { getPostsByTag } from '../../../src/lib/getPostsByTag';
-import { stringArrayComparator } from '../../../src/lib/util/stringArrayComparator';
+import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
+import { Post } from '@/lib/Post';
+import { allTags } from '@/lib/allTags';
+import { getPostsByTag } from '@/lib/getPostsByTag';
+import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
 
-function relatedTags(posts: Article[]): [string, number][] {
+function relatedTags(posts: Post<CustomPostAttribute>[]): [string, number][] {
   const count = new Map<string, number>();
   for (const post of posts) {
     for (const tag of post.attributes.tags) {
@@ -20,7 +21,9 @@ function relatedTags(posts: Article[]): [string, number][] {
   );
 }
 
-function relatedCategories(posts: Article[]): (readonly [string[], number])[] {
+function relatedCategories(
+  posts: Post<CustomPostAttribute>[],
+): (readonly [string[], number])[] {
   const countMap: (readonly [string[], number])[] = [];
   for (const post of posts) {
     for (let i = 1; i <= post.attributes.categories.length; i++) {

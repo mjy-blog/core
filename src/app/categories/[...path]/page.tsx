@@ -1,10 +1,10 @@
 import { readFile } from 'fs/promises';
 
-import { CategorySubNode, Hierarchy } from '@mjy-blog/theme-lib';
+import { CategorySubNode, Hierarchy, Post } from '@mjy-blog/theme-lib';
 import { Metadata } from 'next';
 
 import { CategoryPage } from '@/app/_theme/CategoryPage';
-import { Article } from '@/lib/Article';
+import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
 import { allCategories } from '@/lib/allCategories';
 import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
 
@@ -30,7 +30,7 @@ export default async function Category({ params }: Params) {
         './public/api/category/' + category.join('/') + '/posts.json',
       )
     ).toString(),
-  ) as Article[];
+  ) as Post<CustomPostAttribute>[];
   const sub = JSON.parse(
     (
       await readFile(
