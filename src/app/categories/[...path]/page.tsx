@@ -44,7 +44,7 @@ export default async function Category({ params }: Params) {
         './public/api/category/' + category.join('/') + '/relatedTags.json',
       )
     ).toString(),
-  ) as [name: string, score: number][];
+  ) as [tag: string, score: number][];
 
   return (
     <CategoryPage
