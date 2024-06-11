@@ -7,6 +7,7 @@ import { CategoryPage } from '@/app/_theme/CategoryPage';
 import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
 import { allCategories } from '@/lib/allCategories';
 import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
+import { format } from 'util';
 
 interface Params {
   params: Record<'path', string[]>;
@@ -62,7 +63,10 @@ export function generateMetadata({ params }: Params): Metadata {
   if (!allCategories.some((c) => stringArrayComparator(c, category))) {
     throw new Error(`Non-exist category: ${category.join(' / ')}`);
   }
-  const title = `${category.join(' / ')} | mjy-blog`; // TODO: change this line
+  const title = format(
+    process.env.NEXT_PUBLIC_PAGE_TITLE_CATEGORY,
+    category.join(' / '),
+  );
 
   return { title, openGraph: { title } };
 }

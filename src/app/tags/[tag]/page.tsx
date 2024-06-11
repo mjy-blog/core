@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
 import { TagPage } from '@/app/_theme/TagPage';
 import { allTags } from '@/lib/allTags';
+import { format } from 'util';
 
 interface Params {
   params: Record<'tag', string>;
@@ -45,7 +46,7 @@ export function generateMetadata({ params }: Params): Metadata {
   if (allTags.indexOf(tag) === -1) {
     throw new Error(`Non-exist category: ${tag}`);
   }
-  const title = `${tag} | mjy-blog`; // TODO: change this line
+  const title = format(process.env.NEXT_PUBLIC_PAGE_TITLE_TAG, tag);
 
   return { title, openGraph: { title } };
 }

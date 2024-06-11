@@ -4,6 +4,7 @@ import { ComponentType } from 'react';
 import { PostPage } from '@/app/_theme/PostPage';
 import { data } from '@/lib/data';
 import { getArticleBySlug } from '@/lib/getArticleBySlug';
+import { format } from 'util';
 
 interface Params {
   params: Record<'slug', string>;
@@ -26,7 +27,10 @@ export default async function Post({ params }: Params) {
 
 export function generateMetadata({ params }: Params): Metadata {
   const article = getArticleBySlug(params.slug);
-  const title = `${article.attributes.title} | mjy-blog`; // TODO: change this line
+  const title = format(
+    process.env.NEXT_PUBLIC_PAGE_TITLE_POST,
+    article.attributes.title,
+  );
 
   return {
     title,
