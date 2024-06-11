@@ -7,11 +7,16 @@ import { allTags } from '@/lib/allTags';
 import { getPostsByTag } from '@/lib/getPostsByTag';
 import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
 
-function relatedTags(posts: Post<CustomPostAttribute>[]): [string, number][] {
+function relatedTags(
+  exclude: string,
+  posts: Post<CustomPostAttribute>[],
+): [string, number][] {
   const count = new Map<string, number>();
   for (const post of posts) {
     for (const tag of post.attributes.tags) {
-      count.set(tag, (count.get(tag) ?? 0) + 1);
+      if (tag !== exclude) {
+        count.set(tag, (count.get(tag) ?? 0) + 1);
+      }
     }
   }
   return Object.entries(Object.fromEntries(count.entries())).sort(
@@ -65,7 +70,7 @@ export async function buildTag() {
 
     await writeFile(
       resolve(dir, 'relatedTags.json'),
-      JSON.stringify(relatedTags(posts)),
+      JSON.stringify(relatedTags(tag, posts)),
     );
 
     await writeFile(
