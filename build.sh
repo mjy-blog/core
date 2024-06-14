@@ -63,3 +63,8 @@ rm -rf public/theme
 
 npm i
 npm run build
+
+
+# for github pages
+
+touch out/.nojekyll
