@@ -21,7 +21,7 @@ function relatedTags(
   }
   return Object.entries(Object.fromEntries(count.entries())).sort(
     ([a, aCount], [b, bCount]) => {
-      return aCount - bCount || a.localeCompare(b);
+      return bCount - aCount || a.localeCompare(b);
     },
   );
 }
@@ -48,7 +48,7 @@ function relatedCategories(
 
   return countMap.sort(
     ([a, aCount], [b, bCount]) =>
-      aCount - bCount || stringArrayComparator(a, b),
+      bCount - aCount || stringArrayComparator(a, b),
   );
 }
 

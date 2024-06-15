@@ -31,7 +31,7 @@ function relatedTags(posts: Post<CustomPostAttribute>[]): [string, number][] {
   }
   return Object.entries(Object.fromEntries(count.entries())).sort(
     ([a, aCount], [b, bCount]) => {
-      return aCount - bCount || a.localeCompare(b);
+      return bCount - aCount || a.localeCompare(b);
     },
   );
 }
