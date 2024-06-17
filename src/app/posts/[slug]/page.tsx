@@ -20,9 +20,9 @@ export default async function Post({ params }: Params) {
   const hierarchy = JSON.parse(
     (
       await readFile(
-        './public/api/category/' +
-          article.attributes.categories.join('/') +
-          '/hierarchy.json',
+        `./public/api/category${article.attributes.categories
+          .map((segment) => '/' + segment)
+          .join('')}/hierarchy.json`,
       )
     ).toString(),
   ) as Hierarchy;
