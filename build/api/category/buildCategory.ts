@@ -11,12 +11,23 @@ import { getPostsByCategory } from '@/lib/getPostsByCategory';
 import { inconsistencyError } from '../../util/inconsistencyError';
 
 function getSub(nodes: HierarchyNode[], category: string[]): HierarchyNode[] {
+  if (category.length === 0) {
+    return [
+      ...allCategories
+        .filter((category) => category.length === 1)
+        .map<HierarchyNode>((category) => [category[0], { type: 'category' }]),
+      ...getPostsByCategory(category).map(
+        ({ slug, attributes: { title } }) =>
+          [slug, { type: 'post', title }] as const,
+      ),
+    ];
+  }
   const value = nodes.filter(([name]) => name === category[0])[0][1];
-  if (category.length <= 1) {
-    return (value.type === 'category' && value.sub!) || inconsistencyError();
+  if (category.length === 1) {
+    return (value.type === 'category' && value.sub) || inconsistencyError();
   } else {
     return getSub(
-      (value.type === 'category' && value.sub!) || inconsistencyError(),
+      (value.type === 'category' && value.sub) || inconsistencyError(),
       category.slice(1),
     );
   }
@@ -37,8 +48,10 @@ function relatedTags(posts: Post<CustomPostAttribute>[]): [string, number][] {
 }
 
 export async function buildCategory() {
-  for (const category of allCategories) {
-    const dir = `public/api/category/${category.join('/')}`;
+  for (const category of [[], ...allCategories]) {
+    const dir = `public/api/category${category
+      .map((segment) => '/' + segment)
+      .join('')}`;
     await mkdir(dir, { recursive: true });
 
     const hierarchy = getHierarchyByPath(category);
@@ -66,13 +79,4 @@ export async function buildCategory() {
       JSON.stringify(relatedTags(posts)),
     );
   }
-
-  await writeFile(
-    'public/api/category/top.json',
-    JSON.stringify(
-      allCategories
-        .filter((category) => category.length === 1)
-        .map(([segment]) => segment),
-    ),
-  );
 }
