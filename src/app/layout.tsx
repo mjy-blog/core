@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import { PropsWithChildren } from 'react';
 
 import { ModeContextProvider } from '@-ft/mode-next';
@@ -10,11 +9,7 @@ import './_theme/sideEffects';
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <html
-      lang="ko"
-      className={cookies().get('THEME')?.value === 'dark' ? 'dark' : undefined}
-      suppressHydrationWarning
-    >
+    <html lang="ko" suppressHydrationWarning>
       <head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <script src="/mode.js" />
