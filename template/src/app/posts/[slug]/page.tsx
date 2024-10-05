@@ -30,7 +30,11 @@ export default async function Post({ params }: Params) {
   return (
     <PostPage
       hierarchy={hierarchy}
-      MDXContent={MDXContent}
+      MDXContent={
+        <>
+          <MDXContent />
+        </>
+      }
       attributes={article.attributes as any}
       slug={article.slug}
       tocItems={article.tocItems}

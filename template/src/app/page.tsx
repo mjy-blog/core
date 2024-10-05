@@ -17,7 +17,7 @@ export default async function Page() {
     <MainPage
       hierarchy={hierarchy}
       recentPosts={recentPosts}
-      recentCategories={recentPosts.map((post) => post.attributes.category)}
+      recentCategories={recentPosts.map((post) => post.attributes.categories)}
       recentTags={recentPosts.flatMap((post) => post.attributes.tags)}
     />
   );
