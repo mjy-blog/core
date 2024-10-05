@@ -37,34 +37,37 @@ else
 fi
 
 
+# clean previous build and prepare current build
+
+rm -rf out
+cp -r template out
+(cd out && npm i)
+rm -rf articles
+rm -rf theme
+
+
 # build articles
 
-rm -rf articles
 git clone --recursive "${ARTICLES_GIT_REPOSITORY_URL:?}" articles
 (cd articles && sh build.sh)
-rm -rf 'src/app/_articles'
-cp -r articles/out 'src/app/_articles'
-rm -rf public/posts
-[ ! -d src/app/_articles/public ] || mv src/app/_articles/public public/posts
+cp -r articles/out out/src/app/_articles
+[ ! -d out/src/app/_articles/public ] || mv out/src/app/_articles/public out/public/posts
+[ ! -f out/src/app/_theme/init.sh ] || (cd out && sh src/app/_articles/init.sh)
 
 
 # build theme
 
-rm -rf theme
 git clone --recursive "${THEME_GIT_REPOSITORY_URL:?}" theme
 (cd theme && sh build.sh)
-rm -rf 'src/app/_theme'
-cp -r theme/out 'src/app/_theme'
-rm -rf public/theme
-[ ! -d src/app/_theme/public ] || mv src/app/_theme/public public/theme
-
+cp -r theme/out out/src/app/_theme
+[ ! -d out/src/app/_theme/public ] || mv out/src/app/_theme/public out/public/theme
+[ ! -f out/src/app/_theme/init.sh ] || (cd out && sh src/app/_theme/init.sh)
 
 # build
 
-npm i
-npm run build
-
+MJY_BLOG_DATA_PATH="$(pwd)/out/src/app/_articles/index.json" npm run build
+(cd out && npx next build)
 
 # for github pages
 
-touch out/.nojekyll
+touch out/out/.nojekyll

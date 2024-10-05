@@ -1,5 +1,6 @@
-import { data } from '@/lib/data';
 import { MetadataRoute } from 'next';
+
+import { data } from '../lib/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

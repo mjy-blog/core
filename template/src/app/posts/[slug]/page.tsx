@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 import { ComponentType } from 'react';
 
-import { PostPage } from '@/app/_theme/PostPage';
-import { data } from '@/lib/data';
-import { getArticleBySlug } from '@/lib/getArticleBySlug';
 import { Hierarchy } from '@mjy-blog/theme-lib';
 import { readFile } from 'fs/promises';
 import { format } from 'util';
+import { data } from '../../../lib/data';
+import { getArticleBySlug } from '../../../lib/getArticleBySlug';
+import { PostPage } from '../../_theme/PostPage';
 
 interface Params {
   params: Record<'slug', string>;
@@ -31,8 +31,9 @@ export default async function Post({ params }: Params) {
     <PostPage
       hierarchy={hierarchy}
       MDXContent={MDXContent}
-      attributes={article.attributes}
+      attributes={article.attributes as any}
       slug={article.slug}
+      tocItems={article.tocItems}
     />
   );
 }

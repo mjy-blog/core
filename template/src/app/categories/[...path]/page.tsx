@@ -1,13 +1,17 @@
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
+import { format } from 'node:util';
 
-import { CategorySubNode, Hierarchy, Post } from '@mjy-blog/theme-lib';
+import {
+  CategorySubNode,
+  Hierarchy,
+  Post,
+  PostAttribute,
+} from '@mjy-blog/theme-lib';
 import { Metadata } from 'next';
 
-import { CategoryPage } from '@/app/_theme/CategoryPage';
-import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
-import { allCategories } from '@/lib/allCategories';
-import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
-import { format } from 'util';
+import { allCategories } from '../../../lib/allCategories';
+import { stringArrayComparator } from '../../../lib/util/stringArrayComparator';
+import { CategoryPage } from '../../_theme/CategoryPage';
 
 interface Params {
   params: Record<'path', string[]>;
@@ -31,7 +35,7 @@ export default async function Category({ params }: Params) {
         './public/api/category/' + category.join('/') + '/posts.json',
       )
     ).toString(),
-  ) as Post<CustomPostAttribute>[];
+  ) as Post<PostAttribute>[];
   const sub = JSON.parse(
     (
       await readFile(
@@ -53,7 +57,7 @@ export default async function Category({ params }: Params) {
       hierarchy={hierarchy}
       sub={sub}
       relatedTags={relatedTags}
-      posts={posts}
+      posts={posts as Post<any>[]}
     />
   );
 }

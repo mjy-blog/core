@@ -2,28 +2,14 @@
   "name": "@this-project/mjy-blog-core",
   "private": true,
   "version": "0.1.0",
-  "description": "mjy-blog core",
   "scripts": {
-    "build": "tsx build && next build",
-    "preview": "http-server out"
+    "build": "tsx build",
+    "preview": "http-server out/out"
   },
-  "keywords": [
-    "mjy-blog",
-    "blog"
-  ],
-  "author": "Juyeong Maing<mjy9088@naver.com>",
   "license": "MIT",
   "dependencies": {
-    "@-ft/mode-next": "^0.1.6",
-    "@giscus/react": "^3.0.0",
-    "@mjy-blog/theme-lib": "^0.1.3",
-    "@types/react": "^18.3.2",
-    "mermaid": "^10.9.1",
-    "next": "^14.2.3",
-    "react": "^18.3.1",
-    "rimraf": "^5.0.7",
-    "typescript": "^5.4.5",
-    "zustand": "^4.5.2"
+    "@mjy-blog/theme-lib": "^0.1.8",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@types/node": "20.14.2",

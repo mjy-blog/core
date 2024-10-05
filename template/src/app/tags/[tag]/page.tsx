@@ -1,12 +1,11 @@
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
+import { format } from 'node:util';
 
-import { Post } from '@mjy-blog/theme-lib';
+import { Post, PostAttribute } from '@mjy-blog/theme-lib';
 import { Metadata } from 'next';
 
-import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
-import { TagPage } from '@/app/_theme/TagPage';
-import { allTags } from '@/lib/allTags';
-import { format } from 'util';
+import { allTags } from '../../..//lib/allTags';
+import { TagPage } from '../../_theme/TagPage';
 
 interface Params {
   params: Record<'tag', string>;
@@ -19,7 +18,7 @@ export default async function Category({ params }: Params) {
   }
   const posts = JSON.parse(
     (await readFile('./public/api/tag/' + tag + '/posts.json')).toString(),
-  ) as Post<CustomPostAttribute>[];
+  ) as Post<PostAttribute>[];
   const relatedCategories = JSON.parse(
     (
       await readFile('./public/api/tag/' + tag + '/relatedCategories.json')
@@ -36,7 +35,7 @@ export default async function Category({ params }: Params) {
       tag={tag}
       relatedCategories={relatedCategories}
       relatedTags={relatedTags}
-      posts={posts}
+      posts={posts as Post<any>[]}
     />
   );
 }

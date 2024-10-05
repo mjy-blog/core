@@ -1,13 +1,12 @@
 import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 
-import { HierarchyNode } from '@mjy-blog/theme-lib';
+import { HierarchyNode, PostAttribute } from '@mjy-blog/theme-lib';
 
-import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
-import { Post } from '@/lib/Post';
-import { allCategories } from '@/lib/allCategories';
-import { getHierarchyByPath } from '@/lib/getHierarchyByPath';
-import { getPostsByCategory } from '@/lib/getPostsByCategory';
+import { Post } from '../../../out/src/lib/Post';
+import { allCategories } from '../../../out/src/lib/allCategories';
+import { getHierarchyByPath } from '../../../out/src/lib/getHierarchyByPath';
+import { getPostsByCategory } from '../../../out/src/lib/getPostsByCategory';
 import { inconsistencyError } from '../../util/inconsistencyError';
 
 function getSub(nodes: HierarchyNode[], category: string[]): HierarchyNode[] {
@@ -33,7 +32,7 @@ function getSub(nodes: HierarchyNode[], category: string[]): HierarchyNode[] {
   }
 }
 
-function relatedTags(posts: Post<CustomPostAttribute>[]): [string, number][] {
+function relatedTags(posts: Post<PostAttribute>[]): [string, number][] {
   const count = new Map<string, number>();
   for (const post of posts) {
     for (const tag of post.attributes.tags) {
@@ -49,7 +48,7 @@ function relatedTags(posts: Post<CustomPostAttribute>[]): [string, number][] {
 
 export async function buildCategory() {
   for (const category of [[], ...allCategories]) {
-    const dir = `public/api/category${category
+    const dir = `out/public/api/category${category
       .map((segment) => '/' + segment)
       .join('')}`;
     await mkdir(dir, { recursive: true });

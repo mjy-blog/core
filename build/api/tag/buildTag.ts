@@ -1,15 +1,15 @@
 import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 
-import { CustomPostAttribute } from '@/app/_theme/CustomPostAttribute';
-import { Post } from '@/lib/Post';
-import { allTags } from '@/lib/allTags';
-import { getPostsByTag } from '@/lib/getPostsByTag';
-import { stringArrayComparator } from '@/lib/util/stringArrayComparator';
+import { PostAttribute } from '@mjy-blog/theme-lib';
+import { Post } from '../../../out/src/lib/Post';
+import { allTags } from '../../../out/src/lib/allTags';
+import { getPostsByTag } from '../../../out/src/lib/getPostsByTag';
+import { stringArrayComparator } from '../../../out/src/lib/util/stringArrayComparator';
 
 function relatedTags(
   exclude: string,
-  posts: Post<CustomPostAttribute>[],
+  posts: Post<PostAttribute>[],
 ): [string, number][] {
   const count = new Map<string, number>();
   for (const post of posts) {
@@ -27,7 +27,7 @@ function relatedTags(
 }
 
 function relatedCategories(
-  posts: Post<CustomPostAttribute>[],
+  posts: Post<PostAttribute>[],
 ): (readonly [string[], number])[] {
   const countMap: (readonly [string[], number])[] = [];
   for (const post of posts) {
@@ -54,7 +54,7 @@ function relatedCategories(
 
 export async function buildTag() {
   for (const tag of allTags) {
-    const dir = `public/api/tag/${tag}`;
+    const dir = `out/public/api/tag/${tag}`;
     await mkdir(dir, { recursive: true });
 
     const posts = getPostsByTag(tag);
